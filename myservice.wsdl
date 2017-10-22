@@ -1,0 +1,69 @@
+<definitions name="PremiumBank"
+                  targetNamespace="http://www.examples.com/wsdl/PremiumBank.wsdl"
+                  xmlns="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://www.examples.com/wsdl/PremiumBank.wsdl"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <message name="PremiumBankRequest">
+        <part name="firstName" type="xsd:string"/>
+    </message>
+    <message name="PremiumBankResponse">
+        <part name="request_loan" type="xsd:string"/>
+    </message>
+
+    <portType name="PremiumBank_PortType">
+        <operation name="loan_request">
+            <input message="tns:PremiumBankRequest"/>
+            <output message="tns:PremiumBankResponse"/>
+        </operation>
+        <operation name="tester">
+            <input message="tns:PremiumBankRequest"/>
+            <output message="tns:PremiumBankResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="PremiumBank_Binding" type="tns:PremiumBank_PortType">
+        <soap:binding style="rpc"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="loan_request">
+            <soap:operation soapAction="loan_request"/>
+            <input>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:premiumbank"
+                        use="encoded"/>
+            </input>
+            <output>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:premiumbank"
+                        use="encoded"/>
+            </output>
+        </operation>
+
+        <operation name="tester">
+            <soap:operation soapAction="tester"/>
+            <input>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:premiumbank"
+                        use="encoded"/>
+            </input>
+            <output>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:premiumbank"
+                        use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="PremiumBank_Service">
+        <documentation>WSDL File for HelloService</documentation>
+        <port binding="tns:PremiumBank_Binding" name="PremiumBank_Port">
+            <soap:address
+                    location="http://localhost:8001/wsdl"/>
+        </port>
+    </service>
+</definitions>

@@ -1,0 +1,17 @@
+{
+  "name": "premiumbank",
+  "version": "1.0.0",
+  "description": "Premium Bank",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "author": "Kristoffer Noga",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.15.5",
+    "soap": "^0.21.0"
+  }
+}
