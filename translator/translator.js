@@ -13,7 +13,7 @@ amqp.connect('amqp://datdb.cphbusiness.dk', function (err, conn) {
         ch.consume(q, function (msg) {
             console.log(" [x] %s: ", msg.content.toString());
             contactBank(url, translateRequest(msg.content.toString()), function (res) {
-                console.log("Sending response to ckkm-test-queue")
+                console.log("Sending response to 'ckkm-PremiumBank-response' with object: " + JSON.stringify(res))
                 ch.sendToQueue('ckkm-PremiumBank-response', new Buffer(JSON.stringify(res)), {})
             });
         }, { noAck: true });

@@ -10,7 +10,7 @@ function validateRequest(args) {
     if (
         correctArgs &&
         args.ssn.length === 11 && // 10 numbers and one dash ('-')
-        args.ssn.indexOf('-') !== -1 && 
+        args.ssn.indexOf('-') !== -1 && // making sure the ssn has the correct format
         parseFloat(args.credit_score) > 0 && parseFloat(args.credit_score) <= 800
     ) {
         return true;
