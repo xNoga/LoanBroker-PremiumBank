@@ -17,22 +17,6 @@ amqp.connect('amqp://datdb.cphbusiness.dk', function (err, conn) {
                 ch.sendToQueue('ckkm-PremiumBank-response', new Buffer(JSON.stringify(res)), {})
             });
         }, { noAck: true });
-
-        // let ex = 'ckkm-loanRequest';
-        // let routingKey = 'ckkm-PremiumBankTest'
-
-        // ch.assertExchange(ex, 'direct', { durable: false });
-
-        // ch.assertQueue('', { exclusive: true }, function (err, q) {
-        //     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-        //     ch.bindQueue(q.queue, ex, routingKey);
-        //     ch.consume(q.queue, function (msg) {
-        //         console.log(" [x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
-        //         contactBank(url, translateRequest(msg.content.toString()), function (res) {
-        //             ch.sendToQueue('ckkm-test-queue', new Buffer(JSON.stringify(res)), {})
-        //         });
-        //     }, { noAck: true });
-        // });
     });
 });
 
@@ -40,7 +24,7 @@ function contactBank(url, args, callback) {
     soap.createClient(url, function (err, client) {
         client.loan_request(args, function (err, result) { // the values in 'result' becomes strings because of bodyparser in app.js. Therefore we need to make them floats.
             for (var key in result) {
-                if (typeof result[key] !== 'string') { //
+                if (key === 'interestRate') { //
                     result[key] = parseFloat(result[key]);
                 }
             }
