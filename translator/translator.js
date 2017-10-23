@@ -3,7 +3,7 @@
 var soap = require('soap');
 var amqp = require('amqplib/callback_api');
 var url = 'http://localhost:8001/wsdl?wsdl';
-console.log("hej")
+
 amqp.connect('amqp://datdb.cphbusiness.dk', function (err, conn) {
     conn.createChannel(function (err, ch) {
         let q = 'ckkm-PremiumBank'
@@ -13,8 +13,8 @@ amqp.connect('amqp://datdb.cphbusiness.dk', function (err, conn) {
         ch.consume(q, function (msg) {
             console.log(" [x] %s: ", msg.content.toString());
             contactBank(url, translateRequest(msg.content.toString()), function (res) {
-                console.log("Sending response to ckkm-test-queue2")
-                ch.sendToQueue('ckkm-test-queue', new Buffer(JSON.stringify(res)), {})
+                console.log("Sending response to ckkm-test-queue")
+                ch.sendToQueue('ckkm-PremiumBank-response', new Buffer(JSON.stringify(res)), {})
             });
         }, { noAck: true });
 
