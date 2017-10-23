@@ -40,7 +40,9 @@ function contactBank(url, args, callback) {
     soap.createClient(url, function (err, client) {
         client.loan_request(args, function (err, result) { // the values in 'result' becomes strings because of bodyparser in app.js. Therefore we need to make them floats.
             for (var key in result) {
-                result[key] = parseFloat(result[key]);
+                if (typeof result[key] !== 'string') {
+                    result[key] = parseFloat(result[key]);
+                }
             }
             callback(result);
         });
