@@ -1,14 +1,16 @@
 function validateRequest(args) {
     let correctArgs = true;
     for (var arg in args) {
-        if (Number.isNaN(parseFloat(args[arg]))) {
-            correctArgs = false;
-        }        
+        if (typeof args[arg] !== 'string') { // Because the group decided to send ssn as a string -.-'
+            if (Number.isNaN(parseFloat(args[arg]))) {
+                correctArgs = false;
+            }        
+        }
     }
 
     if (
         correctArgs &&
-        args.ssn.toString().length === 10 &&
+        args.ssn.length === 11 && // 10 numbers and one dash ('-')
         parseFloat(args.credit_score) > 0 && parseFloat(args.credit_score) <= 800
     ) {
         return true;
